@@ -1,0 +1,10 @@
+<!doctype html>
+<html>
+<body>
+    <form action='/newsletter/{{item_pk}}/edit/' method='post'>
+        {{form.as_p}}
+        {% csrf_token %}
+        <input type='submit' value='Submit' />
+    </form>
+</body>
+<html>
