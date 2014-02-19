@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+    <body>
+    <h1>{{date}}</h1>
+    {% for section,item in sections.items %}
+        {% if section %}
+            <div id='section{{section}}'>
+                <h2>{{item.title}}</h2>
+                <div class='content'>
+                    {{item.content}}
+                </div>
+                {% if logged_in %}
+                <a href='/newsletter/{{item.pk}}/edit/'>Edit this section</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </body>
+</html>
+

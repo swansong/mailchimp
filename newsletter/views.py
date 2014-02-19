@@ -23,7 +23,7 @@ def edit_item(request, item_pk):
         form = NewsItemForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/newsletter/' + item_pk + '/view/')
+            return HttpResponseRedirect('/newsletter/' + item_pk + '/')
     
     form = NewsItemForm(instance=item)
     args = {
@@ -51,4 +51,30 @@ def view_item(request, item_pk):
 def home(request):
     """this is where I put together the list of items for templating for today's newsletter
     """
-    return HttpResponse('This is the home view')
+    today = datetime.date.today()
+    return HttpResponseRedirect("/newsletter/%d/%d/%d/" % (today.year, today.month, today.day))
+
+def view_date(request, year, month, day):
+    try:
+        date = datetime.date(int(year), int(month), int(day))
+    except:
+        return HttpResponse('bad date (somehow)')
+    items = NewsItem.objects.all().filter(date_to_publish=date).order_by('position')
+    sections = {
+        1: None,
+        2: None,
+        3: None,
+        4: None,
+        5: None,
+        6: None,
+        0: None,
+    }
+    for item in items:
+        sections[item.position] = item
+    args = {
+        'sections': sections,
+        'date': date.isoformat(),
+        'logged_in': request.user.is_authenticated(),
+    }
+    return render(request, 'newsletter.html', args)
+
