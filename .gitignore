@@ -2,3 +2,4 @@
 **/settings.py
 manage.py
 *.pyc
+*.swp
