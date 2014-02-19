@@ -9,7 +9,7 @@ class NewsItem(models.Model):
     content = models.TextField(max_length=256, blank=True)
     date_to_publish = models.DateField(null=True)
     create_date = models.DateField(auto_now_add=True)
-    position = models.IntegerField(blank=True)
+    position = models.IntegerField(blank=True, null=True, default=0)
 
     def __unicode__(self):
         return(self.pk + ': ' + self.title + ' ' + self.date_to_publish)
