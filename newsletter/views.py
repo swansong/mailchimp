@@ -35,12 +35,26 @@ def edit_item(request, item_pk):
     return render(request, 'edit.html', args, context_instance=RequestContext(request))
 
 @login_required
-def save_item(request, item_pk):
+def new_item(request):
     """this is where we save edits made to an existing item
        currently disused in favor of using the modelform, but
        this would be where we might do ajaxy direct editing
     """
-    return HttpResponse('This is the save item view/logic that would work on item ' + item_pk)
+    try:
+        """this logic here is for filling from the view_date view's
+           output.  If a new item needs to be made from there, it
+           will have these GET parameters
+        """
+        date_to_publish = datetime.datetime.strptime(request.GET['date_to_publish'], "%Y-%m-%d").date()
+        position = int(request.GET['position'])
+        new_item = NewsItem(date_to_publish=date_to_publish, position=position)
+    except:
+        """in case someone url hacks here, or if we want to just make
+           a 'create new' button somewhere
+        """
+        new_item = NewsItem()
+    new_item.save()
+    return HttpResponseRedirect('/newsletter/%d/edit/' % (new_item.pk))
 
 @login_required
 def view_item(request, item_pk):

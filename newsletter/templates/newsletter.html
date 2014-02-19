@@ -3,7 +3,7 @@
     <body>
     <h1>{{date}}</h1>
     {% for section,item in sections.items %}
-        {% if section %}
+        {% if item %}
             <div id='section{{section}}'>
                 <h2>{{item.title}}</h2>
                 <div class='content'>
@@ -11,6 +11,12 @@
                 </div>
                 {% if logged_in %}
                 <a href='/newsletter/{{item.pk}}/edit/'>Edit this section</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <div id='section{{section}}' class='not-filled'>
+                {% if logged_in %}
+                <a href='/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
                 {% endif %}
             </div>
         {% endif %}
