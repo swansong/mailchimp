@@ -7,4 +7,5 @@ urlpatterns = patterns('newsletter.views',
         url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/$', views.view_date, name='view-date'),
         url(r'^new/$', views.new_item, name='new_item'),
         url(r'^home/$', views.home, name='home'),
+        url(r'^feed/$', views.rss, name='rss'),
 )

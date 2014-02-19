@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from newsletter.models import *
@@ -93,3 +94,22 @@ def view_date(request, year, month, day):
     }
     return render(request, 'newsletter.html', args)
 
+def rss(request):
+    date = datetime.date.today()
+    items = NewsItem.objects.all().filter(date_to_publish=date).order_by('position')
+    sections = {
+        1: None,
+        2: None,
+        3: None,
+        4: None,
+        5: None,
+        6: None,
+        0: None,
+    }
+    for item in items:
+        sections[item.position] = item
+    args = {
+        'sections': sections,
+        'date': date.isoformat(),
+    }
+    return render_to_response('rss.xml', args, mimetype='text/xml')
