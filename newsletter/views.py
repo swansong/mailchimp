@@ -23,7 +23,8 @@ def edit_item(request, item_pk):
         form = NewsItemForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/newsletter/' + item_pk + '/')
+            item_date = item.date_to_publish
+            return HttpResponseRedirect('/newsletter/%d/%d/%d/' % (item_date.year, item_date.month, item_date.day))
     
     form = NewsItemForm(instance=item)
     args = {
