@@ -12,7 +12,8 @@ class NewsItem(models.Model):
     position = models.IntegerField(blank=True, null=True, default=0)
 
     def __unicode__(self):
-        return(self.pk + ': ' + self.title + ' ' + self.date_to_publish)
+        date = self.date_to_publish.isoformat()
+        return "%d: %s to be published on %s" % (self.pk, self.title, date)
 
 class NewsImage(models.Model):
     """NewsImages are the images associated with a NewsItem
@@ -21,4 +22,4 @@ class NewsImage(models.Model):
     image = models.ImageField(upload_to='static/newsletter/screenshots/', null=True, blank=True)
 
     def __unicode__(self):
-        return(self.pk)
+        return self.pk
