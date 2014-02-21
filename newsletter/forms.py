@@ -3,7 +3,7 @@ from newsletter.models import *
 from django.forms import ModelForm
 
 class NewsItemForm(ModelForm):
-    POSITION_CHOICES = [(0, '0 (Top Left)'), (1, '1 (Middle Left)'), (2, '2 (Bottom Left)'), (3, '3 (Top Right)'), (4, '4 (Middle Right)'), (5, '5 (Bottom Right)')]
+    POSITION_CHOICES = [(0, '0 (Top Left)'), (1, '1 (Middle Left)'), (2, '2 (Bottom Left)'), (3, '3 (Top Right)'), (4, '4 (Middle Right)'), (5, '5 (Bottom Right)'), (6, 'Draft (not published)')]
     title = forms.CharField(max_length=96, required=False)
     content = forms.CharField(max_length=256, widget=forms.Textarea, required=True)
     date_to_publish = forms.DateField(required=True)
