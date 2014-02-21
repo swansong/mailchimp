@@ -76,19 +76,31 @@ def view_date(request, year, month, day):
     except:
         return HttpResponse('bad date (somehow)')
     items = NewsItem.objects.all().filter(date_to_publish=date).order_by('position')
-    sections = {
+    left_sections = {
+        0: None,
         1: None,
         2: None,
+    }
+    right_sections = {
         3: None,
         4: None,
         5: None,
-        6: None,
-        0: None,
     }
+    extras = []
+    
     for item in items:
-        sections[item.position] = item
+        item_position = item.position
+        if item_position < 3:
+            left_sections[item.position] = item
+        elif item_position <= 5:
+            right_sections[item.position] = item
+        else:
+            extras.append(item)
+
     args = {
-        'sections': sections,
+        'left_sections': left_sections,
+        'right_sections': right_sections,
+        'extras': extras,
         'date': date.isoformat(),
         'logged_in': request.user.is_authenticated(),
     }
