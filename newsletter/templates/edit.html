@@ -1,5 +1,8 @@
 <!doctype html>
 <html>
+<head>
+    {{form.media}}
+</head>
 <body>
     <form action='/newsletter/{{item_pk}}/edit/' method='post'>
         {{form.as_p}}
