@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>UW Daily Newsletter</title>
-        <link>link here</link>
+        <link>http://www.google.com</link>
         <description>This is the daily UW internal email</description>
-    </channel>
     <item>
         <title>The Whole Shebang</title>
-        <link>link here to newsletter page</link>
+        <link>http://www.google.com</link>
         <description>Today's content for the newsletter</description>
-        <content>
+        <content:encoded><![CDATA[
             <h1>{{date}}</h1>
             <div style="align=center; text-align:center">
             <table>
@@ -20,7 +19,7 @@
                         <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
                             <h2>{{item.title}}</h2>
                             <div class='content'>
-                                {{item.content}}
+                                {{item.content|safe}}
                             </div>
                         </div>
                         {% endif %}
@@ -32,7 +31,7 @@
                         <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
                             <h2>{{item.title}}</h2>
                             <div class='content'>
-                                {{item.content}}
+                                {{item.content|safe}}
                             </div>
                         </div>
                         {% endif %}
@@ -41,7 +40,8 @@
                 </tr>
             </table>
             </div>
-        </content>
+        ]]></content:encoded>
     </item>
+    </channel>
 </rss>
 
