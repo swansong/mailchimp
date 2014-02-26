@@ -2,10 +2,10 @@
 <html>
     <body>
     <h1>{{date}}</h1>
-    <div style="align=center; text-align:center">
-    <table>
+    <div style="align:center; text-align:center">
+    <table style="width:100%">
         <tr>
-            <td>
+            <td style="width:60%">
                 {% for section,item in left_sections.items %}
                 {% if item %}
                 <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
@@ -26,7 +26,7 @@
                 {% endif %}
                 {% endfor %}
             </td>
-            <td>
+            <td style="width:40%">
                 {% for section,item in right_sections.items %}
                 {% if item %}
                 <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
