@@ -88,3 +88,6 @@ STATIC_ROOT = ''
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
 }
+
+MEDIA_URL = '/uploads/img/'
+MEDIA_ROOT = ''
