@@ -4,7 +4,7 @@
     {{form.media}}
 </head>
 <body>
-    <form action='/newsletter/{{item_pk}}/edit/' method='post'>
+    <form action='/newsletter/{{item_pk}}/edit/' method='post' enctype='multipart/form-data'>
         {{form.as_p}}
         {% csrf_token %}
         <input type='submit' value='Submit' />

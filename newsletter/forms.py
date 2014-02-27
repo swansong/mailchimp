@@ -9,6 +9,7 @@ class NewsItemForm(ModelForm):
     content = forms.CharField(max_length=256, widget=TinyMCE(attrs={'cols':60, 'rows':30}), required=True)
     date_to_publish = forms.DateField(required=True)
     position = forms.ChoiceField(widget=forms.RadioSelect, choices=POSITION_CHOICES, required=True)
+    image = forms.ImageField(required=False)
 
     def save(self, *args, **kwargs):
         instance = ModelForm.save(self, *args, **kwargs)
@@ -21,5 +22,6 @@ class NewsItemForm(ModelForm):
             'content',
             'date_to_publish',
             'position',
+            'image',
         )
         exclude = ('create_date',)

@@ -21,7 +21,7 @@ def edit_item(request, item_pk):
     item, created = NewsItem.objects.get_or_create(pk=item_pk, defaults={'date_to_publish': date_to_publish})
     
     if request.POST:
-        form = NewsItemForm(request.POST, instance=item)
+        form = NewsItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
             item_date = item.date_to_publish
