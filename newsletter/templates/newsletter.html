@@ -11,6 +11,9 @@
                 <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
                     <h2>{{item.title}}</h2>
                     <div class='content'>
+                        {% if item.image %}
+                        <img src='/{{item.image}}'>
+                        {% endif %}
                         {{item.content|safe}}
                     </div>
                     {% if logged_in %}
@@ -32,6 +35,9 @@
                 <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
                     <h2>{{item.title}}</h2>
                     <div class='content'>
+                        {% if item.image %}
+                        <img src='{{item.image}}'>
+                        {% endif %}
                         {{item.content|safe}}
                     </div>
                     {% if logged_in %}
@@ -56,6 +62,9 @@
         <div style='margin-bottom:20px; border-bottom:1px solid black;'>
             <h2>{{item.title}}</h2>
             <div class='content'>
+                {% if item.image %}
+                <img src='{{item.image}}'>
+                {% endif %}
                 {{item.content|safe}}
             </div>
             <a href='/newsletter/{{item.pk}}/edit/'>Edit this section draft</a>
