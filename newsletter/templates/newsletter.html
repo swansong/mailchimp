@@ -36,7 +36,7 @@
                     <h2>{{item.title}}</h2>
                     <div class='content'>
                         {% if item.image %}
-                        <img src='{{item.image}}'>
+                        <img src='/{{item.image}}'>
                         {% endif %}
                         {{item.content|safe}}
                     </div>
@@ -63,7 +63,7 @@
             <h2>{{item.title}}</h2>
             <div class='content'>
                 {% if item.image %}
-                <img src='{{item.image}}'>
+                <img src='/{{item.image}}'>
                 {% endif %}
                 {{item.content|safe}}
             </div>
