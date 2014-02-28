@@ -71,10 +71,20 @@ def home(request):
     return HttpResponseRedirect("/newsletter/%d/%d/%d/" % (today.year, today.month, today.day))
 
 def view_date(request, year, month, day):
+    """this is the future, past, and present newsletter view.  It allows people to view past and
+       present newsletters without authentication, but future newsletters are for authenticated
+       users only
+    """
+    logged_in = request.user.is_authenticated()
+
     try:
         date = datetime.date(int(year), int(month), int(day))
     except:
         return HttpResponse('bad date (somehow)')
+    
+    if date > datetime.date.today() and not logged_in:
+        return HttpResponse('this newsletter has yet to be published')
+
     items = NewsItem.objects.all().filter(date_to_publish=date).order_by('position')
     left_sections = {
         0: None,
@@ -102,7 +112,7 @@ def view_date(request, year, month, day):
         'right_sections': right_sections,
         'extras': extras,
         'date': date.isoformat(),
-        'logged_in': request.user.is_authenticated(),
+        'logged_in': logged_in,
     }
     return render(request, 'newsletter.html', args)
 
