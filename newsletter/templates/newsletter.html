@@ -1,7 +1,33 @@
 <!doctype html>
 <html>
+    <head>
+        {% load staticfiles %}
+        <script type='text/javascript' src='{% static "jquery-ui-1.10.4.custom/js/jquery-1.10.2.js" %}'></script>
+        <script type='text/javascript' src='{% static "jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.js" %}'></script>
+        <style>@import url('{% static "jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.css" %}');</style>
+        <script>
+            $(document).ready(function() {
+                var this_date = $.datepicker.parseDate('yy-mm-dd', '{{date}}');
+                $('#date').datepicker({
+                    defaultDate: this_date,
+                    onSelect: changeDate,
+                });
+            });
+
+            function changeDate(new_date_string) {
+                //changeDate is triggered when the user chooses a new date and sends the user to 
+                //the corresponding url that contains the proper info
+                var new_date = new Date(new_date_string);
+                var year = new_date.getFullYear();
+                var month = new_date.getMonth() + 1;  //getMonth returns 0-11 instead of 1-12
+                var day = new_date.getDate();
+                window.location.href = '/newsletter/' + year + '/' + month + '/' + day + '/';
+            }
+        </script>
+    </head>
     <body>
-    <h1>{{date}}</h1>
+        <h1>{{date}}</h1>
+        <input type='submit' id='date' value='Choose another day'></input>
     <div style="align:center; text-align:center">
     <table style="width:100%">
         <tr>
