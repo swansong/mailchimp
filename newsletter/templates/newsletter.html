@@ -47,11 +47,11 @@
                     {% endif %}
                 </div>
                 {% else %}
+                {% if logged_in %}
                 <div id='section{{section}}' class='not-filled' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    {% if logged_in %}
                     <a href='/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
-                    {% endif %}
                 </div>
+                {% endif %}
                 {% endif %}
                 {% endfor %}
             </td>
@@ -71,11 +71,11 @@
                     {% endif %}
                 </div>
                 {% else %}
+                {% if logged_in %}
                 <div id='section{{section}}' class='not-filled' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    {% if logged_in %}
                     <a href='/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
-                    {% endif %}
                 </div>
+                {% endif %}
                 {% endif %}
                 {% endfor %}
             </td>

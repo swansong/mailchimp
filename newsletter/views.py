@@ -100,12 +100,13 @@ def view_date(request, year, month, day):
     
     for item in items:
         item_position = item.position
-        if item_position < 3:
-            left_sections[item.position] = item
-        elif item_position <= 5:
-            right_sections[item.position] = item
-        else:
-            extras.append(item)
+        if item.content:
+            if item_position < 3:
+                left_sections[item.position] = item
+            elif item_position <= 5:
+                right_sections[item.position] = item
+            else:
+                extras.append(item)
 
     args = {
         'left_sections': left_sections,
@@ -132,10 +133,11 @@ def rss(request):
     
     for item in items:
         item_position = item.position
-        if item_position < 3:
-            left_sections[item.position] = item
-        elif item_position <= 5:
-            right_sections[item.position] = item
+        if item.content:
+            if item_position < 3:
+                left_sections[item.position] = item
+            elif item_position <= 5:
+                right_sections[item.position] = item
 
     args = {
         'left_sections': left_sections,
