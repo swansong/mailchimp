@@ -89,5 +89,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
 }
 
-MEDIA_ROOT = ''
+MEDIA_ROOT = 'newsletter/uploads'
 MEDIA_URL = '/'

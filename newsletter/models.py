@@ -10,7 +10,7 @@ class NewsItem(models.Model):
     date_to_publish = models.DateField(null=True)
     create_date = models.DateField(auto_now_add=True)
     position = models.IntegerField(blank=True, null=True, default=0)
-    image = models.ImageField(upload_to='newsletter/uploads/img/', null=True, blank=True)
+    image = models.ImageField(upload_to='img/%Y/%m', null=True, blank=True)
 
     def __unicode__(self):
         date = self.date_to_publish.isoformat()
