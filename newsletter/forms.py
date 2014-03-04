@@ -56,3 +56,9 @@ class NewsItemForm(ModelForm):
             'image',
         )
         exclude = ('create_date',)
+
+class LoginForm(forms.Form):
+    """basic login form in lieu of figuiring out NetID stuff
+    """
+    username = forms.CharField(max_length=16)
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput(render_value=False))

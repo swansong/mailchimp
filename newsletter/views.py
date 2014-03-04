@@ -5,9 +5,47 @@ from django.http import HttpResponse
 from newsletter.models import *
 from newsletter.forms import *
 from django.core.context_processors import csrf
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 import datetime
+
+
+def user_login(request):
+    """this view is the login view for the newsletter
+    """
+    if request.user.is_authenticated():
+        try:
+            return HttpResponseRedirect(request.GET['next'])
+        except:
+            return HttpResponseRedirect('/newsletter/home/')
+    
+    if request.POST:
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    try:
+                        return HttpResponseRedirect(request.GET['next'])
+                    except:
+                        return HttpResponseRedirect('/newsletter/home/')
+                else:
+                    return render('inactive user')
+    
+    form = LoginForm()
+
+    return render(request, 'login.html', locals(), context_instance=RequestContext(request))
+
+def user_logout(request):
+    """log out a user
+    """
+    logout(request)
+    return HttpResponseRedirect('/newsletter/home/')
+
 
 @login_required
 def edit_item(request, item_pk):

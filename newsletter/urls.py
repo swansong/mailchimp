@@ -8,4 +8,6 @@ urlpatterns = patterns('newsletter.views',
         url(r'^new/$', views.new_item, name='new_item'),
         url(r'^home/$', views.home, name='home'),
         url(r'^feed/$', views.rss, name='rss'),
+        url(r'^login/$', views.user_login, name='user_login'),
+        url(r'^logout/$', views.user_logout, name='user_logout'),
 )

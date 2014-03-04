@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<body>
+    {% if form.errors %}
+    <p class="required">Please correct the error{{ form.errors|pluralize }} below.</p>
+    {% for key,value in form.errors.items %}
+    <p class="required">The {{key}} field is required.</p>
+    {% endfor %}
+    {% endif %}
+    <div id='login_box'>
+        <h2>Log in</h2>
+        <form action='/newsletter/login/' method='post'>
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type='submit' value='Log in'/>
+        </form>
+    </div>
+</body>
+</html>
