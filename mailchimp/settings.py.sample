@@ -82,12 +82,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = ''
+SUBSITE = '/mailchimp'
+# the following is for dev
+#SUBSITE = ''
+
+#STATIC_URL = '%s/static/' % SUBSITE
+STATIC_URL = '/mailchimpstatic/'
+STATIC_ROOT = '/var/www/mailchimpstatic/'
 
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
 }
 
-MEDIA_ROOT = 'newsletter/uploads'
-MEDIA_URL = '/'
+#full path to actual uploads folder
+MEDIA_ROOT = '/home/jswansong/django/mailchimp/mailchimp/newsletter/uploads/'
+MEDIA_URL = '/newsletter/uploads/'
