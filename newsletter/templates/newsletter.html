@@ -21,7 +21,7 @@
                 var year = new_date.getFullYear();
                 var month = new_date.getMonth() + 1;  //getMonth returns 0-11 instead of 1-12
                 var day = new_date.getDate();
-                window.location.href = '/newsletter/' + year + '/' + month + '/' + day + '/';
+                window.location.href = '{{SUBSITE}}/newsletter/' + year + '/' + month + '/' + day + '/';
             }
         </script>
     </head>
@@ -38,18 +38,18 @@
                     <h2>{{item.title}}</h2>
                     <div class='content'>
                         {% if item.image %}
-                        <img src='{{item.image.url}}'>
+                        <img src='{{SUBSITE}}{{item.image.url}}'>
                         {% endif %}
                         {{item.content|safe}}
                     </div>
                     {% if logged_in %}
-                    <a href='/newsletter/{{item.pk}}/edit/'>Edit this section</a>
+                    <a href='{{SUBSITE}}/newsletter/{{item.pk}}/edit/'>Edit this section</a>
                     {% endif %}
                 </div>
                 {% else %}
                 {% if logged_in %}
                 <div id='section{{section}}' class='not-filled' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    <a href='/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
+                    <a href='{{SUBSITE}}/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
                 </div>
                 {% endif %}
                 {% endif %}
@@ -62,18 +62,18 @@
                     <h2>{{item.title}}</h2>
                     <div class='content'>
                         {% if item.image %}
-                        <img src='{{item.image.url}}'>
+                        <img src='{{SUBSITE}}{{item.image.url}}'>
                         {% endif %}
                         {{item.content|safe}}
                     </div>
                     {% if logged_in %}
-                    <a href='/newsletter/{{item.pk}}/edit/'>Edit this section</a>
+                    <a href='{{SUBSITE}}/newsletter/{{item.pk}}/edit/'>Edit this section</a>
                     {% endif %}
                 </div>
                 {% else %}
                 {% if logged_in %}
                 <div id='section{{section}}' class='not-filled' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    <a href='/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
+                    <a href='{{SUBSITE}}/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
                 </div>
                 {% endif %}
                 {% endif %}
@@ -89,15 +89,15 @@
             <h2>{{item.title}}</h2>
             <div class='content'>
                 {% if item.image %}
-                <img src='{{item.image.url}}'>
+                <img src='{{SUBSITE}}{{item.image.url}}'>
                 {% endif %}
                 {{item.content|safe}}
             </div>
-            <a href='/newsletter/{{item.pk}}/edit/'>Edit this section draft</a>
+            <a href='{{SUBSITE}}/newsletter/{{item.pk}}/edit/'>Edit this section draft</a>
         </div>
         {% endfor %}
         <div>
-            <a href='/newsletter/new/?position=6&date_to_publish={{date}}'>Add a section draft</a>
+            <a href='{{SUBSITE}}/newsletter/new/?position=6&date_to_publish={{date}}'>Add a section draft</a>
         </div>
     </div>
     {% endif %}

@@ -6,6 +6,8 @@ from django.utils.safestring import mark_safe
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 from django.forms.widgets import ClearableFileInput, Input, CheckboxInput
+from django.conf import settings
+SUBSITE = settings.SUBSITE
 
 class CustomClearableImageInput(ClearableFileInput):
 
@@ -21,9 +23,7 @@ class CustomClearableImageInput(ClearableFileInput):
 
         if value and hasattr(value, "url"):
             template = self.template_with_initial
-            substitutions['initial'] = ('<img src="%s" alt="%s"/>'
-                                        % (escape(value.url),
-                                           escape(force_unicode(value))))
+            substitutions['initial'] = ('<img src="%s%s" alt="%s"/>' % (SUBSITE, escape(value.url), escape(force_unicode(value))))
             if not self.is_required:
                 checkbox_name = self.clear_checkbox_name(name)
                 checkbox_id = self.clear_checkbox_id(checkbox_name)

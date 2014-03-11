@@ -9,7 +9,7 @@
     {% endif %}
     <div id='login_box'>
         <h2>Log in</h2>
-        <form action='/newsletter/login/' method='post'>
+        <form action='{{SUBSITE}}/newsletter/login/' method='post'>
             {{ form.as_p }}
             {% csrf_token %}
             <input type='submit' value='Log in'/>

@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 import datetime
+from django.conf import settings
+SUBSITE = settings.SUBSITE
 
 
 def user_login(request):
@@ -18,7 +20,7 @@ def user_login(request):
         try:
             return HttpResponseRedirect(request.GET['next'])
         except:
-            return HttpResponseRedirect('/newsletter/home/')
+            return HttpResponseRedirect('%s/newsletter/home/' % (SUBSITE))
     
     if request.POST:
         form = LoginForm(request.POST)
@@ -32,19 +34,24 @@ def user_login(request):
                     try:
                         return HttpResponseRedirect(request.GET['next'])
                     except:
-                        return HttpResponseRedirect('/newsletter/home/')
+                        return HttpResponseRedirect('%s/newsletter/home/' % (SUBSITE))
                 else:
                     return render('inactive user')
     
     form = LoginForm()
 
-    return render(request, 'login.html', locals(), context_instance=RequestContext(request))
+    args = {
+        'form': form,
+        'SUBSITE': SUBSITE,
+    }
+
+    return render(request, 'login.html', args, context_instance=RequestContext(request))
 
 def user_logout(request):
     """log out a user
     """
     logout(request)
-    return HttpResponseRedirect('/newsletter/home/')
+    return HttpResponseRedirect('%s/newsletter/home/' % (SUBSITE))
 
 
 @login_required
@@ -63,13 +70,14 @@ def edit_item(request, item_pk):
         if form.is_valid():
             form.save()
             item_date = item.date_to_publish
-            return HttpResponseRedirect('/newsletter/%d/%d/%d/' % (item_date.year, item_date.month, item_date.day))
+            return HttpResponseRedirect('%s/newsletter/%d/%d/%d/' % (SUBSITE, item_date.year, item_date.month, item_date.day))
     
     form = NewsItemForm(instance=item)
     args = {
         'request': request,
         'item_pk': item_pk,
         'form': form,
+        'SUBSITE': SUBSITE,
     }
     
     return render(request, 'edit.html', args, context_instance=RequestContext(request))
@@ -94,7 +102,7 @@ def new_item(request):
         """
         new_item = NewsItem()
     new_item.save()
-    return HttpResponseRedirect('/newsletter/%d/edit/' % (new_item.pk))
+    return HttpResponseRedirect('%s/newsletter/%d/edit/' % (SUBSITE, new_item.pk))
 
 @login_required
 def view_item(request, item_pk):
@@ -106,7 +114,7 @@ def home(request):
     """this is where I put together the list of items for templating for today's newsletter
     """
     today = datetime.date.today()
-    return HttpResponseRedirect("/newsletter/%d/%d/%d/" % (today.year, today.month, today.day))
+    return HttpResponseRedirect("%s/newsletter/%d/%d/%d/" % (SUBSITE, today.year, today.month, today.day))
 
 def view_date(request, year, month, day):
     """this is the future, past, and present newsletter view.  It allows people to view past and
@@ -152,6 +160,7 @@ def view_date(request, year, month, day):
         'extras': extras,
         'date': date.isoformat(),
         'logged_in': logged_in,
+        'SUBSITE': SUBSITE,
     }
     return render(request, 'newsletter.html', args)
 
