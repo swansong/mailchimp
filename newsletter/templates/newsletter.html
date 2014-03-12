@@ -31,58 +31,7 @@
         <input type='submit' id='date' value='Choose another day'></input>
         {% endif %}
     <div style="align:center; text-align:center">
-    <table style="width:100%">
-        <tr>
-            <td style="width:60%">
-                {% for section,item in left_sections.items %}
-                {% if item %}
-                <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    <h2>{{item.title}}</h2>
-                    <div class='content'>
-                        {% if item.image %}
-                        <img src='{{SUBSITE}}{{item.image.url}}'>
-                        {% endif %}
-                        {{item.content|safe}}
-                    </div>
-                    {% if logged_in %}
-                    <a href='{{SUBSITE}}/newsletter/{{item.pk}}/edit/'>Edit this section</a>
-                    {% endif %}
-                </div>
-                {% else %}
-                {% if logged_in %}
-                <div id='section{{section}}' class='not-filled' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    <a href='{{SUBSITE}}/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
-                </div>
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-            </td>
-            <td style="width:40%">
-                {% for section,item in right_sections.items %}
-                {% if item %}
-                <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    <h2>{{item.title}}</h2>
-                    <div class='content'>
-                        {% if item.image %}
-                        <img src='{{SUBSITE}}{{item.image.url}}'>
-                        {% endif %}
-                        {{item.content|safe}}
-                    </div>
-                    {% if logged_in %}
-                    <a href='{{SUBSITE}}/newsletter/{{item.pk}}/edit/'>Edit this section</a>
-                    {% endif %}
-                </div>
-                {% else %}
-                {% if logged_in %}
-                <div id='section{{section}}' class='not-filled' style='margin-bottom:20px; border-bottom:1px solid black;'>
-                    <a href='{{SUBSITE}}/newsletter/new/?position={{section}}&date_to_publish={{date}}'>Add something to this section</a>
-                </div>
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-            </td>
-        </tr>
-    </table>
+        {% include 'table.html' %}
     {% if logged_in %}
     <div id='extras'>
         <p>The following sections will not appear in the newsletter on this date. They are only here if you want to store something in a draft state</p>

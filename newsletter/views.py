@@ -190,5 +190,6 @@ def rss(request):
         'left_sections': left_sections,
         'right_sections': right_sections,
         'date': date.isoformat(),
+        'logged_in': False,
     }
     return render_to_response('rss.xml', args, mimetype='text/xml')
