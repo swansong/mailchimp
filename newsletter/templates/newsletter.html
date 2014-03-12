@@ -27,7 +27,9 @@
     </head>
     <body>
         <h1>{{date}}</h1>
+        {% if logged_in %}
         <input type='submit' id='date' value='Choose another day'></input>
+        {% endif %}
     <div style="align:center; text-align:center">
     <table style="width:100%">
         <tr>
