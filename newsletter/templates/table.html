@@ -1,3 +1,4 @@
+{% load newsletter_extras %}
 <table style="width:600px; margin:auto; table-layout:fixed">
     <tr>
         <td style="width:300px;padding:10px">
@@ -7,7 +8,7 @@
                 <h2>{{item.title}}</h2>
                 <div class='content'>
                     {% if item.image %}
-                    <img src='{{SUBSITE}}{{item.image.url}}'>
+                    <img src='{{SUBSITE}}{{item.image.url|thumbnailify:"large"}}'>
                     {% endif %}
                     {{item.content|safe}}
                 </div>
@@ -31,7 +32,7 @@
                 <h2>{{item.title}}</h2>
                 <div class='content'>
                     {% if item.image %}
-                    <img src='{{SUBSITE}}{{item.image.url}}'>
+                    <img src='{{SUBSITE}}{{item.image.url|thumbnailify:"small"}}'>
                     {% endif %}
                     {{item.content|safe}}
                 </div>
