@@ -73,7 +73,12 @@ def edit_item(request, item_pk):
             if request.FILES:
                 this_image = request.FILES['image']
                 today = datetime.date.today()
-                imagefile = '%simg/%d/%02d/%s' % (settings.MEDIA_ROOT, today.year, today.month, this_image.name) #building where the image will live
+                directory = '%simg/%d/%02d/' % (settings.MEDIA_ROOT, today.year, today.month)
+                if not os.path.exists(directory):
+                    """necessary to create proper directory if not in existence.  TODO: make it for the day of the post, not today
+                    """
+                    os.makedirs(directory)
+                imagefile = directory + this_image.name #building where the image and its related thumbnails will live
                 index = imagefile.rfind('.')
                 if this_image.content_type == 'image/jpeg':
                     imagetype = 'JPEG'
