@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 import datetime
 from django.conf import settings
+from PIL import Image
+import os.path
 SUBSITE = settings.SUBSITE
 
 
@@ -68,6 +70,35 @@ def edit_item(request, item_pk):
     if request.POST:
         form = NewsItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
+            import pdb;pdb.set_trace()
+            if request.FILES:
+                this_image = request.FILES['image']
+                today = datetime.date.today()
+                imagefile = '%simg/%d/%02d/%s' % (settings.MEDIA_ROOT, today.year, today.month, this_image.name) #building where the image will live
+                index = imagefile.rfind('.')
+                if this_image.content_type == 'image/jpeg':
+                    imagetype = 'JPEG'
+                if this_image.content_type == 'image/png':
+                    imagetype = 'PNG'
+                try:
+                    this_image.open()
+                    image = Image.open(this_image)
+                    large = imagefile[:index] + '.large' + imagefile[index:]
+                    if not os.path.isfile(large):
+                        image.thumbnail((300, 300), Image.ANTIALIAS)
+                        image.save(large, imagetype)
+                except Exception as e:
+                    return render("could not save large thumbnail")
+                try:
+                    this_image.open()
+                    image = Image.open(this_image)
+                    small = imagefile[:index] + '.small' + imagefile[index:]
+                    if not os.path.isfile(small):
+                        image.thumbnail((280, 280), Image.ANTIALIAS)
+                        image.save(small, imagetype)
+                except Exception as e:
+                    return render("could not save small thumbnail")
+                this_image.close()
             form.save()
             item_date = item.date_to_publish
             return HttpResponseRedirect('%s/newsletter/%d/%d/%d/' % (SUBSITE, item_date.year, item_date.month, item_date.day))
