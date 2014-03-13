@@ -70,7 +70,6 @@ def edit_item(request, item_pk):
     if request.POST:
         form = NewsItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
-            import pdb;pdb.set_trace()
             if request.FILES:
                 this_image = request.FILES['image']
                 today = datetime.date.today()
