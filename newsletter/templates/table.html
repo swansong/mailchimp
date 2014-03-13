@@ -1,6 +1,6 @@
-<table style="width:100%">
+<table style="width:600px; margin:auto; table-layout:fixed">
     <tr>
-        <td style="width:60%">
+        <td style="width:300px;padding:10px">
             {% for section,item in left_sections.items %}
             {% if item %}
             <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
@@ -24,7 +24,7 @@
             {% endif %}
             {% endfor %}
         </td>
-        <td style="width:40%">
+        <td style="width:260px;padding:10px">
             {% for section,item in right_sections.items %}
             {% if item %}
             <div id='section{{section}}' style='margin-bottom:20px; border-bottom:1px solid black;'>
