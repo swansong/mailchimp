@@ -9,7 +9,6 @@
         <link>http://www.google.com</link>
         <description>Today's content for the newsletter</description>
         <content:encoded><![CDATA[
-            <h1>{{date}}</h1>
             <div style="align:center; text-align:center">
                 {% include 'table.html' %}
             </div>
