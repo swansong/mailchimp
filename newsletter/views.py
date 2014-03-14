@@ -60,31 +60,52 @@ def user_logout(request):
 def edit_item(request, item_pk):
     """this is where we edit a block item in the newsletter
     """
-    try:
-        date_to_publish = request.GET['date_to_publish']
-    except:
-        today = datetime.date.today()
-        date_to_publish = today.isoformat()
-    item, created = NewsItem.objects.get_or_create(pk=item_pk, defaults={'date_to_publish': date_to_publish})
-    
+    item, created = NewsItem.objects.get_or_create(pk=item_pk)
+    if created and request.GET:
+        try:
+            item.date_to_publish = request.GET['date_to_publish']
+        except:
+            today = datetime.date.today()
+            item.date_to_publish = today.isoformat()
     if request.POST:
         form = NewsItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             if request.FILES:
-                this_image = request.FILES['image']
-                today = datetime.date.today()
-                directory = '%simg/%d/%02d/' % (settings.MEDIA_ROOT, today.year, today.month)
+
+                # these lines figure out in what folder the thumbnails should be saved
+                date_iso_list = request.POST['date_to_publish'].split('-')
+                directory = '%simg/%s/%s/' % (settings.MEDIA_ROOT, date_iso_list[0], date_iso_list[1])
                 if not os.path.exists(directory):
-                    """necessary to create proper directory if not in existence.  TODO: make it for the day of the post, not today
-                    """
+                    # necessary to create proper directory if not in existence.
                     os.makedirs(directory)
+
+                this_image = request.FILES['image']
                 imagefile = directory + this_image.name #building where the image and its related thumbnails will live
-                index = imagefile.rfind('.')
+                index = imagefile.rfind('.')            #figuring out where to append thumbnail
+                
+                if os.path.isfile(imagefile):
+                    """ This is designed to use django's naming scheme to figure out what an image's saved name will be
+                        if a file with the same name already exists in the month's folder.  For creating proper thumbnails
+                        in the edge case of two different uploaded pictures with the same name.  TODO: make custom storage
+                    """
+                    tempname = imagefile
+                    counter = 0
+                    while os.path.isfile(tempname):
+                        counter += 1
+                        tempname = '%s_%d%s' % (imagefile[:index], counter, imagefile[index:])
+                    imagefile = tempname
+                    index = imagefile.rfind('.')
+
+                #figure out the content type of the image
                 if this_image.content_type == 'image/jpeg':
                     imagetype = 'JPEG'
                 if this_image.content_type == 'image/png':
                     imagetype = 'PNG'
+
                 try:
+                    """ Open the uploaded file, then create a PIL image from that.  Then create an approprate thumbnail name
+                        and size and save it.  Do for large thumbnail then repeat for small
+                    """
                     this_image.open()
                     image = Image.open(this_image)
                     large = imagefile[:index] + '.large' + imagefile[index:]
@@ -98,13 +119,16 @@ def edit_item(request, item_pk):
                     image = Image.open(this_image)
                     small = imagefile[:index] + '.small' + imagefile[index:]
                     if not os.path.isfile(small):
-                        image.thumbnail((280, 280), Image.ANTIALIAS)
+                        image.thumbnail((260, 260), Image.ANTIALIAS)
                         image.save(small, imagetype)
                 except Exception as e:
                     return render("could not save small thumbnail")
+
                 this_image.close()
+
             form.save()
-            item_date = item.date_to_publish
+            
+            item_date = item.date_to_publish    #replicated functionality if image is uploaded, but can't assume that is the case
             return HttpResponseRedirect('%s/newsletter/%d/%d/%d/' % (SUBSITE, item_date.year, item_date.month, item_date.day))
     
     form = NewsItemForm(instance=item)
