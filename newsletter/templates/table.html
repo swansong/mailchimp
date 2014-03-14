@@ -8,7 +8,7 @@
                 <h2>{{item.title}}</h2>
                 <div class='content'>
                     {% if item.image %}
-                    <img src='{{SUBSITE}}{{item.image.url|thumbnailify:"large"}}'>
+                    <img src='{{CDN}}{{SUBSITE}}{{item.image.url|thumbnailify:"large"}}'>
                     {% endif %}
                     {{item.content|safe}}
                 </div>
@@ -32,7 +32,7 @@
                 <h2>{{item.title}}</h2>
                 <div class='content'>
                     {% if item.image %}
-                    <img src='{{SUBSITE}}{{item.image.url|thumbnailify:"small"}}'>
+                    <img src='{{CDN}}{{SUBSITE}}{{item.image.url|thumbnailify:"small"}}'>
                     {% endif %}
                     {{item.content|safe}}
                 </div>

@@ -13,7 +13,9 @@ from django.conf import settings
 from PIL import Image
 import os.path
 import re
+
 SUBSITE = settings.SUBSITE
+CDN = settings.MEDIA_SERVER
 
 
 def user_login(request):
@@ -225,6 +227,7 @@ def view_date(request, year, month, day):
         'date': date.isoformat(),
         'logged_in': logged_in,
         'SUBSITE': SUBSITE,
+        'CDN': CDN,     #included here for when we go live and need a place for people to view the newsletter
     }
     return render(request, 'newsletter.html', args)
 
@@ -255,5 +258,7 @@ def rss(request):
         'right_sections': right_sections,
         'date': date.isoformat(),
         'logged_in': False,
+        'SUBSITE': SUBSITE,
+        'CDN': CDN,
     }
     return render_to_response('rss.xml', args, mimetype='text/xml')
