@@ -84,7 +84,6 @@ def edit_item(request, item_pk):
 
                 this_image = request.FILES['image']
                 name = this_image.name
-                import pdb;pdb.set_trace()
                 name = name.replace(' ', '_');              #django turn spaces into underscores
                 name = re.sub('[\[\]{}()<>:;]', '', name)     #and removes colons from filenames
                 imagefile = directory + name                #building where the image and its related thumbnails will live
@@ -130,8 +129,6 @@ def edit_item(request, item_pk):
                         image.save(small, imagetype)
                 except Exception as e:
                     return render("could not save small thumbnail")
-
-                this_image.close()
 
             form.save()
             
