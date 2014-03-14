@@ -12,6 +12,7 @@ import datetime
 from django.conf import settings
 from PIL import Image
 import os.path
+import re
 SUBSITE = settings.SUBSITE
 
 
@@ -80,8 +81,12 @@ def edit_item(request, item_pk):
                     os.makedirs(directory)
 
                 this_image = request.FILES['image']
-                imagefile = directory + this_image.name #building where the image and its related thumbnails will live
-                index = imagefile.rfind('.')            #figuring out where to append thumbnail
+                name = this_image.name
+                import pdb;pdb.set_trace()
+                name = name.replace(' ', '_');              #django turn spaces into underscores
+                name = re.sub('[\[\]{}()<>:;]', '', name)     #and removes colons from filenames
+                imagefile = directory + name                #building where the image and its related thumbnails will live
+                index = imagefile.rfind('.')                #figuring out where to append thumbnail
                 
                 if os.path.isfile(imagefile):
                     """ This is designed to use django's naming scheme to figure out what an image's saved name will be
