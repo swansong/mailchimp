@@ -97,5 +97,5 @@ TINYMCE_DEFAULT_CONFIG = {
 #full path to actual uploads folder
 MEDIA_ROOT = '/home/jswansong/django/mailchimp/mailchimp/newsletter/uploads/'
 MEDIA_URL = '/newsletter/uploads/'
-MEDIA_SERVER = 'http://128.208.132.98:8000'
-#MEDIA_SERVER = '/' #for dev
+CDN = 'http://128.208.132.98:8000'
+#MEDIA_SERVER = '' #for dev

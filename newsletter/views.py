@@ -15,7 +15,7 @@ import os.path
 import re
 
 SUBSITE = settings.SUBSITE
-CDN = settings.MEDIA_SERVER
+CDN = settings.CDN
 
 
 def user_login(request):
